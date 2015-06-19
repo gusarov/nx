@@ -162,12 +162,35 @@ namespace Nx.Tests
 		[TestMethod]
 		public void Should_not_subscribe_for_property_changed_if_not_necessery()
 		{
-			Assert.Inconclusive();
+			var src = new ObservableCollection<BadItem>();
+			src.Add(new BadItem());
+
+			var trg = src.SelectO(x => x.Pro, SelectorBehaviour.None);
+
+			Assert.AreEqual(false, trg.First());
+			src[0].Pro = true;
+
+			Assert.AreEqual(false, trg.First());
+			Assert.AreEqual(false, src[0].Subscribed);
+		}
+
+		class BadItem : INotifyPropertyChanged
+		{
+			public bool Pro { get; set; }
+
+			public bool Subscribed { get; private set; }
+
+			event PropertyChangedEventHandler INotifyPropertyChanged.PropertyChanged
+			{
+				add { Subscribed = true; }
+				remove {  }
+			}
 		}
 
 		[TestMethod]
 		public void Should_cache_selector()
 		{
+
 			Assert.Inconclusive();
 		}
 

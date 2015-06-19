@@ -11,6 +11,8 @@
     <AssemblyName>NX</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -62,6 +64,7 @@
     </Compile>
     <Compile Include="Internal\ObservableEnumerableException.cs" />
     <Compile Include="Internal\SelectEnumerableObservableEnumerable.cs" />
+    <Compile Include="Internal\SelectObservableEnumerable.cs" />
     <Compile Include="Internal\SelfMaintainable.cs" />
     <Compile Include="Internal\SumAggregatedValueProvider.cs">
       <SubType>Code</SubType>
@@ -73,6 +76,7 @@
     <Compile Include="IValueProvider.cs" />
     <Compile Include="ObservableEnumerableExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SelectorBehaviour.cs" />
     <Compile Include="ValueProvider.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -85,7 +89,9 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\MetaCreator.1.7.34\build\MetaCreator.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MetaCreator.1.7.34\build\MetaCreator.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

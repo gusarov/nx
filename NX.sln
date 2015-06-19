@@ -1,9 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nx.Tests", "Nx.Tests\Nx.Tests.csproj", "{D796ECE0-A2D8-4A19-B0C6-8A94A63347CF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nx", "Nx\Nx.csproj", "{4FD874AA-BB73-4CC0-BEBA-E3AF2932814B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{16271DC9-9ACD-4B47-A027-81BC2DC1D027}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nx.Sample", "Nx.Sample\Nx.Sample.csproj", "{C708A89F-3A49-44CE-9BBA-D5C5CA5B5C11}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nx.Sample.Tests", "Nx.Sample.Tests\Nx.Sample.Tests.csproj", "{5534286B-33BE-43A6-9B37-5D26C4A00382}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +32,14 @@ Global
 		{4FD874AA-BB73-4CC0-BEBA-E3AF2932814B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FD874AA-BB73-4CC0-BEBA-E3AF2932814B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FD874AA-BB73-4CC0-BEBA-E3AF2932814B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C708A89F-3A49-44CE-9BBA-D5C5CA5B5C11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C708A89F-3A49-44CE-9BBA-D5C5CA5B5C11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C708A89F-3A49-44CE-9BBA-D5C5CA5B5C11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C708A89F-3A49-44CE-9BBA-D5C5CA5B5C11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5534286B-33BE-43A6-9B37-5D26C4A00382}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5534286B-33BE-43A6-9B37-5D26C4A00382}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5534286B-33BE-43A6-9B37-5D26C4A00382}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5534286B-33BE-43A6-9B37-5D26C4A00382}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

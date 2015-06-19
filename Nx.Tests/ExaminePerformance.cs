@@ -65,6 +65,7 @@ namespace Nx.Tests
 			return c / sw.Elapsed.TotalSeconds;
 		}
 
+/*
 		[TestMethod]
 		public void Perf05_AllocateList()
 		{
@@ -84,7 +85,6 @@ namespace Nx.Tests
 			var src1 = new List<int>(_max);
 			PerformanceAssert(10000000, src1.Add);
 		}
-/*
 
 		[TestMethod]
 		public void Perf05_ArrayListAdd()
@@ -99,7 +99,6 @@ namespace Nx.Tests
 			var src2 = new ArrayList(_intMaxValueLastChunk / 10);
 			MeasureAssert(10000000, i => src2.Add(i));
 		}
-*/
 
 		[TestMethod]
 		public void Perf10_ObservableCollectionAdd()
@@ -111,9 +110,10 @@ namespace Nx.Tests
 		[TestMethod]
 		public void Perf20_ObservableCollectionAddRef()
 		{
-			var src = new ObservableCollection<ValueProvider<int>>();
+			var src = new ObservableCollection<ConstValueProvider<int>>();
 			PerformanceAssert(1000000, x => src.Add(x));
 		}
+*/
 
 		[TestMethod]
 		public void Perf30_SelectAdd()
@@ -126,7 +126,7 @@ namespace Nx.Tests
 		[TestMethod]
 		public void Perf40_SelectAddRef()
 		{
-			var src = new ObservableCollection<ValueProvider<int>>();
+			var src = new ObservableCollection<ConstValueProvider<int>>();
 			var trg = src.SelectO(x => x.ToString());
 			PerformanceAssert(500000, x => src.Add(x));
 		}
@@ -134,7 +134,7 @@ namespace Nx.Tests
 		[TestMethod]
 		public void Perf50_SelectAddListen()
 		{
-			var src = new ObservableCollection<ValueProvider<int>>();
+			var src = new ObservableCollection<ConstValueProvider<int>>();
 			var trg = src.SelectO(x => x.ToString(), SelectorBehaviour.Listen);
 			PerformanceAssert(500000, x => src.Add(x));
 		}
@@ -142,7 +142,7 @@ namespace Nx.Tests
 		[TestMethod]
 		public void Perf60_SelectAddRefCache()
 		{
-			var src = new ObservableCollection<ValueProvider<int>>();
+			var src = new ObservableCollection<ConstValueProvider<int>>();
 			var trg = src.SelectO(x => x.Value.ToString(), SelectorBehaviour.Cache);
 			PerformanceAssert(100000, x => src.Add(x));
 		}
@@ -160,12 +160,8 @@ namespace Nx.Tests
 		[TestMethod]
 		public void Perf80_SelectUpdateListen()
 		{
-			var src = new ObservableCollection<ValueProvider<int>>();
 			var m = 1000000;
-			for (int i = 0; i < m; i++)
-			{
-				src.Add(i);
-			}
+			var src = new ObservableCollection<ValueProvider<int>>(Enumerable.Range(0, m).Select(x => (ValueProvider<int>)x));
 			var trg = src.SelectO(x => x.Value.ToString(), SelectorBehaviour.Listen);
 			var rnd = new Random();
 			PerformanceAssert(200000, x => src[rnd.Next(m)].Value = x);

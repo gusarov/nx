@@ -33,5 +33,11 @@ namespace NX
 		{
 			get { return _value; }
 		}
+
+		public static implicit operator ConstValueProvider<T>(T value)
+		{
+			return new ConstValueProvider<T>(value);
+		}
+
 	}
 }

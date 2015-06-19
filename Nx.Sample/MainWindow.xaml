@@ -1,0 +1,17 @@
+﻿<Window x:Class="Nx.Sample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	Title="{Binding Books.CachedCount}" Height="350" Width="525">
+    <Grid>
+		<ListBox ItemsSource="{Binding Books}"
+			VirtualizingStackPanel.IsVirtualizing="True"
+			ScrollViewer.CanContentScroll="True">
+			
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel />
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+		</ListBox>
+    </Grid>
+</Window>

@@ -7,17 +7,10 @@ namespace NX
 {
 	public static class ValueProvider
 	{
-/*
 		public static ValueProvider<T> Create<T>(T value)
 		{
 			return new ValueProvider<T>(value);
 		}
-
-		public static IEnumerable<ValueProvider<T>> CreateCollection<T>(params T[] value)
-		{
-			return value.Select(x => new ValueProvider<T>(x));
-		}
-*/
 	}
 
 	public class ValueProvider<T> : NxObservableObject, IValueProvider<T>
@@ -51,7 +44,7 @@ namespace NX
 			}
 		}
 
-		public static implicit operator ValueProvider<T>(T value)
+		public static explicit operator ValueProvider<T>(T value)
 		{
 			return new ValueProvider<T>(value);
 		}
