@@ -33,9 +33,16 @@ namespace Nx.Sample
 
 	class BookViewModel
 	{
+		private readonly Book _book;
+
 		public BookViewModel(Book book)
 		{
+			_book = book;
+		}
 
+		public override string ToString()
+		{
+			return "VM: " + _book;
 		}
 	}
 

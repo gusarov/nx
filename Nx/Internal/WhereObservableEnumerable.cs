@@ -7,11 +7,46 @@ using System.Linq;
 
 namespace NX.Internal
 {
-	internal sealed class WhereObservableEnumerable<T> : NxObservableEnumerable, ICollection<T>, INotifyCollectionChanged, INotifyPropertyChanged
+	internal sealed class WhereObservableEnumerable<T> : NxObservableEnumerable<T>, ICollection<T>
 	{
-		public WhereObservableEnumerable(IEnumerable<T> source, Func<T, bool> predicate)
+		private readonly IEnumerable<T> _source;
+		private readonly Func<T, bool> _predicate;
+		private readonly INotifyPropertyChanged _additionalEventSource;
+
+		public WhereObservableEnumerable(IEnumerable<T> source, Func<T, bool> predicate, object additionalEventSource)
 		{
-			throw new NotImplementedException();
+			if (source == null)
+			{
+				throw new ArgumentNullException("source");
+			}
+			if (predicate == null)
+			{
+				throw new ArgumentNullException("predicate");
+			}
+			_source = source;
+			_predicate = predicate;
+
+			_additionalEventSource = additionalEventSource as INotifyPropertyChanged;
+			if (_additionalEventSource != null)
+			{
+				_additionalEventSource.PropertyChanged += _additionalEventSource_PropertyChanged;
+			}
+
+			var ncc = _source as INotifyCollectionChanged;
+			if (ncc != null)
+			{
+				ncc.CollectionChanged += ncc_CollectionChanged;
+			}
+		}
+
+		void ncc_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		{
+			
+		}
+
+		void _additionalEventSource_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			
 		}
 
 		/// <summary>
@@ -20,9 +55,15 @@ namespace NX.Internal
 		/// <returns>
 		/// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
 		/// </returns>
-		public IEnumerator<T> GetEnumerator()
+		public override IEnumerator<T> GetEnumerator()
 		{
-			throw new NotImplementedException();
+			foreach (var src in _source)
+			{
+				if (_predicate(src))
+				{
+					yield return src;
+				}
+			}
 		}
 
 		/// <summary>
@@ -42,7 +83,7 @@ namespace NX.Internal
 		/// <param name="item">The object to add to the <see cref="T:System.Collections.Generic.ICollection`1"/>.</param><exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.</exception>
 		public void Add(T item)
 		{
-			throw new NotImplementedException();
+			throw new NotSupportedException();
 		}
 
 		/// <summary>
@@ -51,7 +92,7 @@ namespace NX.Internal
 		/// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only. </exception>
 		public void Clear()
 		{
-			throw new NotImplementedException();
+			throw new NotSupportedException();
 		}
 
 		/// <summary>
@@ -84,7 +125,7 @@ namespace NX.Internal
 		/// <param name="item">The object to remove from the <see cref="T:System.Collections.Generic.ICollection`1"/>.</param><exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.</exception>
 		public bool Remove(T item)
 		{
-			throw new NotImplementedException();
+			throw new NotSupportedException();
 		}
 
 		/// <summary>
@@ -95,7 +136,10 @@ namespace NX.Internal
 		/// </returns>
 		public int Count
 		{
-			get { throw new NotImplementedException(); }
+			get
+			{
+				throw new NotImplementedException();
+			}
 		}
 
 		/// <summary>
@@ -106,8 +150,67 @@ namespace NX.Internal
 		/// </returns>
 		public bool IsReadOnly
 		{
-			get { throw new NotImplementedException(); }
+			get { return true; }
 		}
 
+	}
+
+	internal sealed class TakeObservableEnumerable<T> : NxObservableEnumerable<T>
+	{
+		public TakeObservableEnumerable(IEnumerable<T> source, int max)
+		{
+			throw new NotImplementedException();
+		}
+
+		public override IEnumerator<T> GetEnumerator()
+		{
+			throw new NotImplementedException();
+		}
+	}
+
+	internal sealed class TakeObservableList<T> : NxObservableReadonlyList<T>
+	{
+		private readonly IList<T> _source;
+		private readonly int _max;
+
+		public TakeObservableList(IList<T> source, int max)
+		{
+			_source = source;
+			_max = max;
+		}
+
+		public override IEnumerator<T> GetEnumerator()
+		{
+			using (var etor = _source.GetEnumerator())
+			{
+				for (int i = 0; i < _max && etor.MoveNext(); i++)
+				{
+					yield return etor.Current;
+				}
+			}
+		}
+
+		public override int IndexOf(T item)
+		{
+			return _source.IndexOf(item);
+		}
+
+		protected override T Get(int index)
+		{
+			if (index < 0)
+			{
+				throw new IndexOutOfRangeException();
+			}
+			if (index >= Count)
+			{
+				throw new IndexOutOfRangeException();
+			}
+			return _source[index];
+		}
+
+		public override int Count
+		{
+			get { return Math.Min(_max, _source.Count); }
+		}
 	}
 }

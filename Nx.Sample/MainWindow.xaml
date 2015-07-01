@@ -2,16 +2,29 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	Title="{Binding Books.CachedCount}" Height="350" Width="525">
-    <Grid>
-		<ListBox ItemsSource="{Binding Books}"
-			VirtualizingStackPanel.IsVirtualizing="True"
-			ScrollViewer.CanContentScroll="True">
-			
+    <DockPanel>
+		<TextBox DockPanel.Dock="Top" Text="{Binding Query}" />
+		<ListBox
+			ItemsSource="{Binding Books2}">
+		</ListBox>
+		<!--
+		<ItemsControl
+			ScrollViewer.CanContentScroll="True"
+			VirtualizingPanel.IsVirtualizing='True'
+			ItemsSource="{Binding Books1}">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
 					<VirtualizingStackPanel />
 				</ItemsPanelTemplate>
 			</ItemsControl.ItemsPanel>
-		</ListBox>
-    </Grid>
+			<ItemsControl.Template>
+				<ControlTemplate>
+					<ScrollViewer>
+						<ItemsPresenter />
+					</ScrollViewer>
+				</ControlTemplate>
+			</ItemsControl.Template>
+		</ItemsControl>
+		-->
+	</DockPanel>
 </Window>

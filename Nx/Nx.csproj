@@ -51,6 +51,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Internal\AggregatedValueProviderFromVP.cs" />
+    <Compile Include="Internal\AndValueProvider.cs" />
     <Compile Include="Internal\EquatableWeakReference.cs" />
     <Compile Include="Internal\LazySelectObservableEnumerable.cs" />
     <Compile Include="Internal\Md5AggregatedValueProvider.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Internal\NxObservableObject.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Internal\NxObservableReadonlyList.cs" />
     <Compile Include="Internal\Property.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -76,6 +78,7 @@
     <Compile Include="IValueProvider.cs" />
     <Compile Include="ObservableEnumerableExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Internal\SelectObservableList.cs" />
     <Compile Include="SelectorBehaviour.cs" />
     <Compile Include="ValueProvider.cs" />
   </ItemGroup>

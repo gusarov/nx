@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace NX.Internal
 {
-	internal sealed class SelectObservableEnumerable<TSource, TResult> : NxObservableEnumerable, ICollection<TResult>, INotifyCollectionChanged, INotifyPropertyChanged
+	internal sealed class SelectObservableEnumerable<TSource, TResult> : NxObservableEnumerable<TResult>, ICollection<TResult>
 	{
 		private readonly IEnumerable<TSource> _source;
 		private readonly Func<TSource, TResult> _selector;
@@ -303,14 +303,9 @@ namespace NX.Internal
 			Validate();
 		}
 
-		public IEnumerator<TResult> GetEnumerator()
+		public override IEnumerator<TResult> GetEnumerator()
 		{
 			return _target.GetEnumerator();
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
 		}
 
 		void ICollection<TResult>.Add(TResult item)

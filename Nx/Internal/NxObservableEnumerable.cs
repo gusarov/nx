@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
@@ -6,7 +7,7 @@ using System.Linq;
 
 namespace NX.Internal
 {
-	internal class NxObservableEnumerable : NxObservableObject, INotifyCollectionChanged
+	internal abstract class NxObservableEnumerable<TR> : NxObservableObject, INotifyCollectionChanged, IEnumerable<TR>
 	{
 		// reduce count of objects allocated
 		protected static readonly NotifyCollectionChangedEventArgs _reset = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset);
@@ -35,5 +36,13 @@ namespace NX.Internal
 				throw new ObservableEnumerableException(failMessage);
 			}
 		}
+
+		public abstract IEnumerator<TR> GetEnumerator();
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
+		}
+
 	}
 }

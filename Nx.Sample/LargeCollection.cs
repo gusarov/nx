@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Nx.Sample
 {
-	sealed class ExtremelyLargeCollection<T> : IEnumerable<T>, IList, INotifyPropertyChanged, INotifyCollectionChanged where T : class, new()
+	sealed class ExtremelyLargeCollection<T> : IEnumerable<T>, IList, IList<T>, INotifyPropertyChanged, INotifyCollectionChanged where T : class, new()
 	{
 		IEnumerator IEnumerable.GetEnumerator()
 		{
@@ -77,6 +77,10 @@ namespace Nx.Sample
 		}
 
 		int IList.IndexOf(object value)
+		{
+			return IndexOfCore(value);
+		}
+		int IndexOfCore(object value)
 		{
 			if (Get(0) == value) // shortcut for WPF virtualization
 			{
@@ -178,6 +182,65 @@ namespace Nx.Sample
 			{
 				handler(this, e);
 			}
+		}
+
+		int IList<T>.IndexOf(T item)
+		{
+			return IndexOfCore(item);
+		}
+
+		void IList<T>.Insert(int index, T item)
+		{
+			throw new NotImplementedException();
+		}
+
+		void IList<T>.RemoveAt(int index)
+		{
+			throw new NotImplementedException();
+		}
+
+		T IList<T>.this[int index]
+		{
+			get { return Get(index); }
+			set
+			{
+				throw new NotImplementedException();
+			}
+		}
+
+		void ICollection<T>.Add(T item)
+		{
+			throw new NotImplementedException();
+		}
+
+		void ICollection<T>.Clear()
+		{
+			throw new NotImplementedException();
+		}
+
+		bool ICollection<T>.Contains(T item)
+		{
+			throw new NotImplementedException();
+		}
+
+		void ICollection<T>.CopyTo(T[] array, int arrayIndex)
+		{
+			throw new NotImplementedException();
+		}
+
+		int ICollection<T>.Count
+		{
+			get { throw new NotImplementedException(); }
+		}
+
+		bool ICollection<T>.IsReadOnly
+		{
+			get { throw new NotImplementedException(); }
+		}
+
+		bool ICollection<T>.Remove(T item)
+		{
+			throw new NotImplementedException();
 		}
 	}
 
